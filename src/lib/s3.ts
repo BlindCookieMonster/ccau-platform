@@ -7,14 +7,16 @@ import {
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const s3Client = new S3Client({
-  region: process.env.AWS_REGION ?? "ap-southeast-2",
+  region: process.env.S3_REGION || "auto",
+  endpoint: process.env.S3_ENDPOINT,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
   },
+  forcePathStyle: true,
 });
 
-const bucket = process.env.S3_BUCKET ?? "ccau-images-prod";
+const bucket = process.env.S3_BUCKET ?? "ccau-images";
 
 /**
  * Generate a presigned PUT URL for device image uploads.
