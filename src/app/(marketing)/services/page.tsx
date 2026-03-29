@@ -2,41 +2,30 @@ import {
   Camera,
   Video,
   Cloud,
-  Clapperboard,
   Clock,
   Shield,
   Headphones,
-  DollarSign,
   MapPin,
+  DollarSign,
+  Check,
   Milestone,
+  Clapperboard,
   Wrench,
-  ChevronRight,
 } from "lucide-react";
 
-function Section({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+/* ------------------------------------------------------------------ */
+/*  Section Badge                                                      */
+/* ------------------------------------------------------------------ */
+function SectionBadge({ children }: { children: React.ReactNode }) {
   return (
-    <section className={`px-4 py-20 sm:px-6 lg:px-8 ${className}`}>
-      <div className="mx-auto max-w-7xl">{children}</div>
-    </section>
-  );
-}
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="mb-3 inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-400">
+    <span className="inline-block rounded-[4px] bg-amber-500/10 px-3 py-2 text-[12px] font-semibold uppercase tracking-[0.6px] text-[#B88100]">
       {children}
     </span>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/*  Complete Time-Lapse Package                                       */
+/*  Data                                                               */
 /* ------------------------------------------------------------------ */
 const packageInclusions = [
   {
@@ -77,9 +66,6 @@ const packageInclusions = [
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  Add-on Services                                                   */
-/* ------------------------------------------------------------------ */
 const addons = [
   {
     icon: Milestone,
@@ -116,9 +102,6 @@ const addons = [
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  Why Choose CCAU                                                   */
-/* ------------------------------------------------------------------ */
 const reasons = [
   {
     icon: MapPin,
@@ -147,158 +130,187 @@ const reasons = [
 ];
 
 /* ------------------------------------------------------------------ */
-/*  Page                                                              */
+/*  Page                                                               */
 /* ------------------------------------------------------------------ */
 export default function ServicesPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(212,168,67,0.12),transparent)]" />
-        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <SectionLabel>Our Services</SectionLabel>
-            <h1 className="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl">
-              Everything You Need to Document Your Build
-            </h1>
-            <p className="mt-6 text-lg text-slate-300">
-              From camera installation to final video delivery, our complete
-              time-lapse package covers every aspect of construction
-              documentation.
+      {/* Hero — light bg */}
+      <section className="bg-white py-24 sm:py-28 px-5 sm:px-6 lg:px-20">
+        <div className="mx-auto max-w-7xl text-center">
+          <SectionBadge>OUR SERVICES</SectionBadge>
+          <h1 className="mt-5 text-[40px] sm:text-[52px] lg:text-[60px] font-bold leading-[1.2] tracking-[-3.6px] text-[#171717]">
+            Comprehensive Time-Lapse Solutions
+          </h1>
+          <p className="mt-6 text-[16px] leading-[1.5] text-[#171717]/70 max-w-2xl mx-auto">
+            From camera installation to final video delivery, our complete
+            time-lapse package covers every aspect of construction documentation.
+          </p>
+        </div>
+      </section>
+
+      {/* Complete Package — light bg */}
+      <section className="bg-[#F7F8FA] py-24 px-5 sm:px-6 lg:px-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center">
+            <SectionBadge>COMPLETE PACKAGE</SectionBadge>
+            <h2 className="mt-5 text-[36px] sm:text-[44px] lg:text-[48px] font-bold leading-[1.2] tracking-[-2.88px] text-[#171717]">
+              What&apos;s Included
+            </h2>
+            <p className="mt-4 text-[16px] leading-[1.5] text-[#171717]/70 max-w-2xl mx-auto">
+              Everything included in our standard service — one installation
+              fee, one monthly rate, no surprises.
             </p>
+          </div>
+
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {packageInclusions.map((item) => (
+              <div
+                key={item.title}
+                className="bg-white rounded-lg p-8 border border-[#E0E4EA]/50"
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/10">
+                  <item.icon className="h-5 w-5 text-[#F2AF0D]" />
+                </div>
+                <h3 className="mt-4 text-[18px] font-bold text-[#171717] tracking-tight">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-[14px] leading-[1.5] text-[#171717]/60">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Pricing summary */}
+          <div className="mt-14 grid gap-6 lg:grid-cols-2">
+            <div className="relative rounded-lg overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-700 to-stone-800" />
+              <div className="relative p-8">
+                <p className="text-[12px] font-semibold uppercase tracking-[0.6px] text-[#F2AF0D]">
+                  Installation
+                </p>
+                <p className="mt-2 text-[28px] font-bold text-white">
+                  From $1,200
+                </p>
+                <p className="mt-1 text-[14px] text-white/60">
+                  One-time installation depending on mounting type
+                </p>
+              </div>
+            </div>
+            <div className="relative rounded-lg overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-700 to-stone-800" />
+              <div className="relative p-8">
+                <p className="text-[12px] font-semibold uppercase tracking-[0.6px] text-[#F2AF0D]">
+                  Monthly Service
+                </p>
+                <p className="mt-2 text-[28px] font-bold text-white">
+                  $1,500/month
+                </p>
+                <p className="mt-1 text-[14px] text-white/60">
+                  For all 6 cameras — includes everything
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Complete Package */}
-      <Section>
-        <div className="text-center">
-          <SectionLabel>Complete Package</SectionLabel>
-          <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-            The Complete Time-Lapse Package
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-slate-400">
-            Everything included in our standard service — one installation fee,
-            one monthly rate, no surprises.
-          </p>
-        </div>
+      {/* Optional Add-Ons */}
+      <section className="bg-white py-24 px-5 sm:px-6 lg:px-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center">
+            <SectionBadge>OPTIONAL ADD-ONS</SectionBadge>
+            <h2 className="mt-5 text-[36px] sm:text-[44px] lg:text-[48px] font-bold leading-[1.2] tracking-[-2.88px]">
+              <span className="text-[#171717] italic">Want More Than Just </span>
+              <span className="text-[#C9A45A] italic">Time-lapse?</span>
+            </h2>
+          </div>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {packageInclusions.map((item) => (
-            <div
-              key={item.title}
-              className="rounded-xl border border-white/10 bg-slate-900/60 p-6"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/10">
-                <item.icon className="h-5 w-5 text-amber-500" />
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {addons.map((addon) => (
+              <div
+                key={addon.title}
+                className="bg-[#F5F3ED] border-t-[3px] border-t-[#F2AF0D] rounded-lg p-8 sm:p-10"
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/10">
+                  <addon.icon className="h-5 w-5 text-[#F2AF0D]" />
+                </div>
+                <h3 className="mt-4 text-[20px] font-bold text-[#171717] tracking-[-1px]">
+                  {addon.title}
+                </h3>
+                <p className="mt-2 text-[22px] font-bold text-[#F2AF0D]">
+                  {addon.price}
+                </p>
+                <ul className="mt-5 space-y-3">
+                  {addon.features.map((f) => (
+                    <li
+                      key={f}
+                      className="flex items-start gap-2.5 text-[14px] text-[#171717]/70"
+                    >
+                      <Check className="h-4 w-4 mt-0.5 shrink-0 text-[#F2AF0D]" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <h3 className="mt-4 text-lg font-semibold text-white">
-                {item.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                {item.description}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </Section>
-
-      {/* Add-on Services */}
-      <Section className="bg-gradient-to-b from-slate-950 via-slate-900/50 to-slate-950">
-        <div className="text-center">
-          <SectionLabel>Optional Add-Ons</SectionLabel>
-          <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-            Add-On Visit Packages
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-slate-400">
-            Book additional site visits for milestone documentation, marketing
-            content, or handover packages.
-          </p>
-        </div>
-
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {addons.map((addon) => (
-            <div
-              key={addon.title}
-              className="flex flex-col rounded-xl border border-white/10 bg-slate-900/60 p-6"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/10">
-                <addon.icon className="h-5 w-5 text-amber-500" />
-              </div>
-              <h3 className="mt-4 text-lg font-semibold text-white">
-                {addon.title}
-              </h3>
-              <p className="mt-1 text-sm font-medium text-amber-400">
-                {addon.price}
-              </p>
-              <ul className="mt-4 flex-1 space-y-2">
-                {addon.features.map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-center gap-2 text-sm text-slate-300"
-                  >
-                    <ChevronRight className="h-3 w-3 shrink-0 text-amber-500" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </Section>
+      </section>
 
       {/* Why Choose CCAU */}
-      <Section>
-        <div className="text-center">
-          <SectionLabel>Why Choose CCAU</SectionLabel>
-          <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-            Built for the Australian Construction Industry
-          </h2>
-        </div>
-
-        <div className="mt-14 grid gap-6 sm:grid-cols-2">
-          {reasons.map((reason) => (
-            <div
-              key={reason.title}
-              className="flex gap-4 rounded-xl border border-white/10 bg-slate-900/60 p-6"
-            >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-500/10">
-                <reason.icon className="h-5 w-5 text-amber-500" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-white">
-                  {reason.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  {reason.description}
-                </p>
-              </div>
+      <section className="bg-[#F7F8FA] py-24 px-5 sm:px-6 lg:px-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="bg-white rounded-lg p-8 sm:p-12">
+            <div className="text-center mb-12">
+              <SectionBadge>WHY CHOOSE CCAU</SectionBadge>
+              <h2 className="mt-5 text-[36px] sm:text-[40px] lg:text-[44px] font-bold leading-[1.2] tracking-[-2px] text-[#171717]">
+                Built for the Australian Construction Industry
+              </h2>
             </div>
-          ))}
+
+            <div className="grid gap-8 sm:grid-cols-2">
+              {reasons.map((reason) => (
+                <div key={reason.title} className="flex gap-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-500/10">
+                    <reason.icon className="h-5 w-5 text-[#F2AF0D]" />
+                  </div>
+                  <div>
+                    <h3 className="text-[18px] font-bold text-[#171717] tracking-tight">
+                      {reason.title}
+                    </h3>
+                    <p className="mt-2 text-[14px] leading-[1.5] text-[#171717]/60">
+                      {reason.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </Section>
+      </section>
 
       {/* CTA */}
-      <Section className="bg-gradient-to-b from-slate-950 via-slate-900/50 to-slate-950">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold text-white sm:text-4xl">
+      <section className="relative py-24 px-5 sm:px-6 lg:px-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-stone-950" />
+        <div className="relative mx-auto max-w-7xl text-center">
+          <h2 className="text-[36px] sm:text-[40px] lg:text-[44px] font-extrabold leading-[1.2] tracking-[-2px] text-white/90">
             Ready to Get Started?
           </h2>
-          <p className="mt-4 text-lg text-slate-300">
+          <p className="mt-4 text-[16px] text-white/60 max-w-lg mx-auto">
             Contact us for a free site assessment and quote.
           </p>
-          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <div className="mt-10">
             <a
               href="mailto:ben.cook@re-create.au?subject=Service%20Enquiry"
-              className="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-slate-950 transition-colors hover:bg-amber-400"
+              className="h-12 px-6 inline-flex items-center justify-center rounded-lg bg-[#F2AF0D] text-[#171717] text-[14px] font-semibold transition-colors hover:bg-[#dba00c]"
             >
               Get in Touch
-              <ChevronRight className="h-4 w-4" />
             </a>
           </div>
         </div>
-      </Section>
+      </section>
     </>
   );
 }

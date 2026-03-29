@@ -1,16 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ */
-/*  FAQ Data                                                          */
+/*  Section Badge                                                      */
+/* ------------------------------------------------------------------ */
+function SectionBadge({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-block rounded-[4px] bg-amber-500/10 px-3 py-2 text-[12px] font-semibold uppercase tracking-[0.6px] text-[#B88100]">
+      {children}
+    </span>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  FAQ Data                                                           */
 /* ------------------------------------------------------------------ */
 type FaqCategory =
   | "All"
@@ -39,7 +45,7 @@ const faqs: FaqItem[] = [
     category: "General",
     question: "How many cameras do I need for my project?",
     answer:
-      "We typically recommend 6 cameras to provide comprehensive coverage of most construction sites. However, the exact number depends on your site's size, layout, and specific documentation needs. We conduct a site assessment to determine the optimal camera placement and quantity.",
+      "We typically recommend 6 cameras to provide comprehensive coverage of most construction sites. However, the exact number depends on your site\u2019s size, layout, and specific documentation needs. We conduct a site assessment to determine the optimal camera placement and quantity.",
   },
 
   // Installation
@@ -47,7 +53,7 @@ const faqs: FaqItem[] = [
     category: "Installation",
     question: "How long does installation take?",
     answer:
-      "Initial camera installation typically takes 1-2 days depending on your site's complexity and the mounting types required. We coordinate with your site team to minimise disruption and ensure all safety protocols are followed.",
+      "Initial camera installation typically takes 1-2 days depending on your site\u2019s complexity and the mounting types required. We coordinate with your site team to minimise disruption and ensure all safety protocols are followed.",
   },
   {
     category: "Installation",
@@ -75,7 +81,7 @@ const faqs: FaqItem[] = [
     category: "Service",
     question: "How often will I receive time-lapse videos?",
     answer:
-      "Our standard service includes quarterly Progressive Interim Time-Lapse (PITL) videos. These are professionally edited to showcase your project's major milestones. You also have 24/7 access to all raw images through our cloud platform.",
+      "Our standard service includes quarterly Progressive Interim Time-Lapse (PITL) videos. These are professionally edited to showcase your project\u2019s major milestones. You also have 24/7 access to all raw images through our cloud platform.",
   },
   {
     category: "Service",
@@ -89,7 +95,7 @@ const faqs: FaqItem[] = [
     category: "Technical",
     question: "What happens if a camera stops working?",
     answer:
-      "We provide 24/7 monitoring of all cameras. If we detect any issues, our team is notified immediately and we'll coordinate a site visit to resolve the problem. This monitoring and maintenance service is included in your monthly fee.",
+      "We provide 24/7 monitoring of all cameras. If we detect any issues, our team is notified immediately and we\u2019ll coordinate a site visit to resolve the problem. This monitoring and maintenance service is included in your monthly fee.",
   },
   {
     category: "Technical",
@@ -101,7 +107,7 @@ const faqs: FaqItem[] = [
   // Add-ons
   {
     category: "Add-ons",
-    question: "What's included in the add-on visit packages?",
+    question: "What\u2019s included in the add-on visit packages?",
     answer:
       "Progress Capture ($300) includes ground and aerial photos/videos of your current site state. Action Capture ($550) adds focus on active construction work. Builders Choice is a custom package for handover documentation, with pricing based on your specific requirements.",
   },
@@ -124,21 +130,55 @@ const categories: FaqCategory[] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/*  Component Helpers                                                 */
+/*  FAQ Accordion Item                                                 */
 /* ------------------------------------------------------------------ */
-function SectionLabel({ children }: { children: React.ReactNode }) {
+function FaqAccordionItem({
+  faq,
+  isOpen,
+  onToggle,
+}: {
+  faq: FaqItem;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
   return (
-    <span className="mb-3 inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-400">
-      {children}
-    </span>
+    <div className="bg-white border border-[#E0E4EA] rounded-lg overflow-hidden">
+      <button
+        onClick={onToggle}
+        className="w-full text-left px-6 py-5 flex items-start gap-4"
+      >
+        <div className="flex-1">
+          <span className="block text-[11px] font-semibold uppercase tracking-[0.5px] text-[#B88100] mb-1.5">
+            {faq.category}
+          </span>
+          <span className="block text-[16px] font-bold text-[#171717] tracking-tight leading-snug">
+            {faq.question}
+          </span>
+        </div>
+        <ChevronDown
+          className={cn(
+            "h-5 w-5 shrink-0 text-[#171717]/40 mt-1 transition-transform duration-200",
+            isOpen && "rotate-180"
+          )}
+        />
+      </button>
+      {isOpen && (
+        <div className="px-6 pb-5 -mt-1">
+          <p className="text-[14px] leading-[1.6] text-[#171717]/60">
+            {faq.answer}
+          </p>
+        </div>
+      )}
+    </div>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/*  Page                                                              */
+/*  Page                                                               */
 /* ------------------------------------------------------------------ */
 export default function FaqPage() {
   const [activeCategory, setActiveCategory] = useState<FaqCategory>("All");
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const filteredFaqs =
     activeCategory === "All"
@@ -147,38 +187,37 @@ export default function FaqPage() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(212,168,67,0.12),transparent)]" />
-        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <SectionLabel>FAQ</SectionLabel>
-            <h1 className="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl">
-              Frequently Asked Questions
-            </h1>
-            <p className="mt-6 text-lg text-slate-300">
-              Everything you need to know about our construction time-lapse
-              camera systems and services.
-            </p>
-          </div>
+      {/* Hero — light bg */}
+      <section className="bg-white py-24 sm:py-28 px-5 sm:px-6 lg:px-20">
+        <div className="mx-auto max-w-7xl text-center">
+          <SectionBadge>HELP CENTER</SectionBadge>
+          <h1 className="mt-5 text-[40px] sm:text-[52px] lg:text-[60px] font-bold leading-[1.2] tracking-[-3.6px] text-[#171717]">
+            Frequently Asked Questions
+          </h1>
+          <p className="mt-6 text-[16px] leading-[1.5] text-[#171717]/70 max-w-2xl mx-auto">
+            Everything you need to know about our construction time-lapse camera
+            systems and services.
+          </p>
         </div>
       </section>
 
       {/* FAQ Content */}
-      <section className="px-4 py-20 sm:px-6 lg:px-8">
+      <section className="bg-[#F7F8FA] py-20 px-5 sm:px-6 lg:px-20">
         <div className="mx-auto max-w-3xl">
-          {/* Category filter tabs */}
-          <div className="mb-10 flex flex-wrap gap-2">
+          {/* Category filter pills */}
+          <div className="mb-10 flex flex-wrap justify-center gap-2">
             {categories.map((category) => (
               <button
                 key={category}
-                onClick={() => setActiveCategory(category)}
+                onClick={() => {
+                  setActiveCategory(category);
+                  setOpenIndex(null);
+                }}
                 className={cn(
-                  "rounded-full px-4 py-2 text-sm font-medium transition-all",
+                  "rounded-lg px-4 py-2 text-[13px] font-medium transition-all",
                   activeCategory === category
-                    ? "bg-amber-500 text-slate-950"
-                    : "border border-white/10 text-slate-400 hover:border-white/20 hover:text-white"
+                    ? "bg-transparent text-[#171717] font-semibold"
+                    : "bg-[#F1F3F6] text-[#171717]/60 hover:text-[#171717]/80"
                 )}
               >
                 {category}
@@ -186,35 +225,32 @@ export default function FaqPage() {
             ))}
           </div>
 
-          {/* Accordion */}
-          <Accordion className="space-y-2">
+          {/* FAQ accordion */}
+          <div className="flex flex-col gap-3">
             {filteredFaqs.map((faq, index) => (
-              <AccordionItem
+              <FaqAccordionItem
                 key={`${faq.category}-${index}`}
-                className="rounded-xl border border-white/10 bg-slate-900/60 px-5 not-last:border-b-white/10"
-              >
-                <AccordionTrigger className="py-4 text-base font-medium text-white hover:no-underline hover:text-amber-400">
-                  <span className="pr-4">{faq.question}</span>
-                </AccordionTrigger>
-                <AccordionContent className="text-slate-400 leading-relaxed">
-                  <p>{faq.answer}</p>
-                </AccordionContent>
-              </AccordionItem>
+                faq={faq}
+                isOpen={openIndex === index}
+                onToggle={() =>
+                  setOpenIndex(openIndex === index ? null : index)
+                }
+              />
             ))}
-          </Accordion>
+          </div>
 
-          {/* Still have questions */}
-          <div className="mt-16 rounded-xl border border-white/10 bg-slate-900/60 p-8 text-center">
-            <h3 className="text-xl font-semibold text-white">
-              Still Have Questions?
+          {/* Still have questions? */}
+          <div className="mt-16 bg-[#F7F8FA] border border-[#E0E4EA] rounded-lg p-8 sm:p-12 text-center">
+            <h3 className="text-[22px] font-bold text-[#171717] tracking-tight">
+              Still have questions?
             </h3>
-            <p className="mt-2 text-slate-400">
+            <p className="mt-3 text-[16px] text-[#171717]/60">
               We&apos;re happy to help. Get in touch and we&apos;ll get back to
               you as soon as possible.
             </p>
             <a
               href="mailto:ben.cook@re-create.au?subject=FAQ%20Enquiry"
-              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-slate-950 transition-colors hover:bg-amber-400"
+              className="mt-6 inline-block text-[14px] font-bold text-[#171717] underline underline-offset-4 hover:text-[#F2AF0D] transition-colors"
             >
               Contact Us
             </a>
